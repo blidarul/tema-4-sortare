@@ -19,6 +19,14 @@ void INTswap(int *a, int *b)
     return;
 }
 
+void CHARswap(char *a, char *b)
+{
+    char aux = *a;
+    *a = *b;
+    *b = aux;
+    return;
+}
+
 void FLOATswap(float *a, float *b)
 {
     float aux = *a;
@@ -48,6 +56,15 @@ void FLOATafisare(float v[], int n)
     for(int i = 0; i < n; i++)
         printf("%f ",v[i]);
     printf("\n");
+    return;
+}
+
+void CHARBubbleSort(char v[], int n)
+{
+    for(int i = 0; i < n; i++)
+    for(int j = 0; j < n - 1; j++)
+        if(v[j] > v[j + 1])
+            CHARswap(&v[j],&v[j+1]);
     return;
 }
 
@@ -86,6 +103,23 @@ void INTInsertionSort(int v[], int n)
     return;
 }
 
+void CHARInsertionSort(char v[], int n)
+{
+    for(int i = 0; i < n; i++)
+    {
+        int j = 0;
+        while(j < i && v[j] <= v[i])
+            j++;
+        
+        char aux = v[i];
+
+        for(int k = i; k > j; k--)
+            v[k] = v[k - 1];
+        v[j] = aux;
+    }
+    return;
+}
+
 void FLOATInsertionSort(float v[], int n)
 {
     for(int i = 0; i < n; i++)
@@ -109,6 +143,12 @@ void INTSelectionSort(int v[], int n)
     return;
 }
 
+void CHARSelectionSort(char v[], int n)
+{
+
+    return;
+}
+
 void FLOATSelectionSort(float v[], int n)
 {
 
@@ -121,6 +161,12 @@ void INTMergeSort(int v[], int n)
     return;
 }
 
+void CHARMergeSort(char v[], int n)
+{
+
+    return;
+}
+
 void FLOATMergeSort(float v[], int n)
 {
 
@@ -128,6 +174,12 @@ void FLOATMergeSort(float v[], int n)
 }
 
 void INTQuickSort(int v[], int n)
+{
+
+    return;
+}
+
+void CHARQuickSort(char v[], int n)
 {
 
     return;
@@ -151,7 +203,7 @@ int main()
     printf("Bubble Sort:\n");
 
     INTBubbleSort(v1,n);
-    INTBubbleSort(v2,n);
+    CHARBubbleSort(v2,n);
     FLOATBubbleSort(v3,n);
 
     INTafisare(v1,n);
@@ -162,7 +214,7 @@ int main()
     printf("\nInsertion Sort:\n");
 
     INTInsertionSort(v1,n);
-    INTInsertionSort(v2,n);
+    CHARInsertionSort(v2,n);
     FLOATInsertionSort(v3,n);
 
     INTafisare(v1,n);
@@ -173,7 +225,7 @@ int main()
     printf("\nSelection Sort:\n");
 
     INTSelectionSort(v1,n);
-    INTSelectionSort(v2,n);
+    CHARSelectionSort(v2,n);
     FLOATSelectionSort(v3,n);
 
     INTafisare(v1,n);
@@ -185,7 +237,7 @@ int main()
     printf("\nMerge Sort:\n");
 
     INTMergeSort(v1,n);
-    INTMergeSort(v2,n);
+    CHARMergeSort(v2,n);
     FLOATMergeSort(v3,n);
 
     INTafisare(v1,n);
@@ -196,7 +248,7 @@ int main()
     printf("\nQuick Sort:\n");
 
     INTQuickSort(v1,n);
-    INTQuickSort(v2,n);
+    CHARQuickSort(v2,n);
     FLOATQuickSort(v3,n);
 
     INTafisare(v1,n);
