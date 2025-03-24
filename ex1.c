@@ -139,19 +139,52 @@ void FLOATInsertionSort(float v[], int n)
 
 void INTSelectionSort(int v[], int n)
 {
-
+    for(int i = 0; i < n - 1; i++)
+    {
+        int min = v[i];
+        int poz = i;
+        for(int j = i; j < n; j++)
+            if(v[j] < min)
+            {
+                min = v[j];
+                poz = j;
+            }
+        INTswap(&v[i],&v[poz]);
+    }
     return;
 }
 
 void CHARSelectionSort(char v[], int n)
 {
-
+    for(int i = 0; i < n - 1; i++)
+    {
+        char min = v[i];
+        int poz = i;
+        for(int j = i; j < n; j++)
+            if(v[j] < min)
+            {
+                min = v[j];
+                poz = j;
+            }
+        CHARswap(&v[i],&v[poz]);
+    }
     return;
 }
 
 void FLOATSelectionSort(float v[], int n)
 {
-
+    for(int i = 0; i < n - 1; i++)
+    {
+        float min = v[i];
+        int poz = i;
+        for(int j = i; j < n; j++)
+            if(v[j] < min)
+            {
+                min = v[j];
+                poz = j;
+            }
+        FLOATswap(&v[i],&v[poz]);
+    }
     return;
 }
 
