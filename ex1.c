@@ -231,7 +231,6 @@ int main()
     INTafisare(v1,n);
     CHARafisare(v2,n);
     FLOATafisare(v3,n);
-
 //Merge Sort
     reset(v1,v2,v3,V1,V2,V3,n);
     printf("\nMerge Sort:\n");
