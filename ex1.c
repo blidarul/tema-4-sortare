@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void reset(int v1[],char v2[],float v3[],int V1[],char V2[],float V3[],int n)
 {
@@ -35,26 +36,26 @@ void FLOATswap(float *a, float *b)
     return;
 }
 
-void INTafisare(int v[], int n)
+void INTafisare(int *v, int n)
 {
     for(int i = 0; i < n; i++)
-        printf("%d ",v[i]);
+        printf("%d ",*(v + i));
     printf("\n");
     return;
 }
 
-void CHARafisare(char v[], int n)
+void CHARafisare(char *v, int n)
 {
     for(int i = 0; i < n; i++)
-        printf("%c ",v[i]);
+        printf("%c ",*(v + i));
     printf("\n");
     return;
 }
 
-void FLOATafisare(float v[], int n)
+void FLOATafisare(float *v, int n)
 {
     for(int i = 0; i < n; i++)
-        printf("%f ",v[i]);
+        printf("%f ",*(v + i));
     printf("\n");
     return;
 }
@@ -90,15 +91,11 @@ void INTInsertionSort(int v[], int n)
 {
     for(int i = 0; i < n; i++)
     {
-        int j = 0;
-        while(j < i && v[j] <= v[i])
-            j++;
-        
         int aux = v[i];
-
-        for(int k = i; k > j; k--)
-            v[k] = v[k - 1];
-        v[j] = aux;
+        int k;
+        for(k = i - 1; k >= 0 && v[k] > aux; k--)
+            v[k + 1] = v[k];
+        v[k + 1] = aux;
     }
     return;
 }
@@ -107,15 +104,11 @@ void CHARInsertionSort(char v[], int n)
 {
     for(int i = 0; i < n; i++)
     {
-        int j = 0;
-        while(j < i && v[j] <= v[i])
-            j++;
-        
         char aux = v[i];
-
-        for(int k = i; k > j; k--)
-            v[k] = v[k - 1];
-        v[j] = aux;
+        int k;
+        for(k = i - 1; k >= 0 && v[k] > aux; k--)
+            v[k + 1] = v[k];
+        v[k + 1] = aux;
     }
     return;
 }
@@ -124,15 +117,11 @@ void FLOATInsertionSort(float v[], int n)
 {
     for(int i = 0; i < n; i++)
     {
-        int j = 0;
-        while(j < i && v[j] <= v[i])
-            j++;
-        
         float aux = v[i];
-
-        for(int k = i; k > j; k--)
-            v[k] = v[k - 1];
-        v[j] = aux;
+        int k;
+        for(k = i - 1; k >= 0 && v[k] > aux; k--)
+            v[k + 1] = v[k];
+        v[k + 1] = aux;
     }
     return;
 }
@@ -188,22 +177,183 @@ void FLOATSelectionSort(float v[], int n)
     return;
 }
 
-void INTMergeSort(int v[], int n)
+int * INTmerge(int *l1, int *l2,int n)
 {
+    int *l3 = (int *) malloc(sizeof(int)*n),k = 0;
+    int i = 0,n1 = n/2;
+    int j = 0,n2 = n - n/2;
+    while(i < n1 && j < n2)
+    {
+        if(*l1 > *l2)
+        {
+            *(l3 + k) = *l2;
+            l2 = l2 + 1;
+            j ++;
+            k ++;
+        }
+        else
+        {
+            *(l3 + k) = *l1;
+            l1 = l1 + 1;
+            i ++;
+            k ++;
+        }
+    }
 
-    return;
+    while(i < n1)
+    {
+        *(l3 + k) = *l1;
+        l1 = l1 + 1;
+        i ++;
+        k ++;
+    }
+
+    while(j < n2)
+    {
+        *(l3 + k) = *l2;
+        l2 = l2 + 1;
+        j ++;
+        k ++;
+    }
+
+    return l3;
 }
 
-void CHARMergeSort(char v[], int n)
+int * INTMergeSort(int *l, int n)
 {
-
-    return;
+    if(n == 1)
+        return l;
+    int *l1,*l2;
+    l1 = (int *) malloc(sizeof(int) * (n/2));
+    l2 = (int *) malloc(sizeof(int) * (n - n/2));
+    for(int i = 0; i <= n/2; i ++)
+    {
+        *(l1 + i) = *(l + i);
+        *(l2 + i) = *(l + n/2 + i);
+    }
+    l1 = INTMergeSort(l1,n/2);
+    l2 = INTMergeSort(l2,n - n/2);
+    return INTmerge(l1,l2,n);
 }
 
-void FLOATMergeSort(float v[], int n)
+char * CHARmerge(char *l1, char *l2,int n)
 {
+    char *l3 = (char *) malloc(sizeof(char)*n);
+    int k = 0;
+    int i = 0,n1 = n/2;
+    int j = 0,n2 = n - n/2;
+    while(i < n1 && j < n2)
+    {
+        if(*l1 > *l2)
+        {
+            *(l3 + k) = *l2;
+            l2 = l2 + 1;
+            j ++;
+            k ++;
+        }
+        else
+        {
+            *(l3 + k) = *l1;
+            l1 = l1 + 1;
+            i ++;
+            k ++;
+        }
+    }
 
-    return;
+    while(i < n1)
+    {
+        *(l3 + k) = *l1;
+        l1 = l1 + 1;
+        i ++;
+        k ++;
+    }
+
+    while(j < n2)
+    {
+        *(l3 + k) = *l2;
+        l2 = l2 + 1;
+        j ++;
+        k ++;
+    }
+
+    return l3;
+}
+
+char * CHARMergeSort(char *l, int n)
+{
+    if(n == 1)
+        return l;
+    char *l1,*l2;
+    l1 = (char *) malloc(sizeof(char) * (n/2));
+    l2 = (char *) malloc(sizeof(char) * (n - n/2));
+    for(int i = 0; i <= n/2; i ++)
+    {
+        *(l1 + i) = *(l + i);
+        *(l2 + i) = *(l + n/2 + i);
+    }
+    l1 = CHARMergeSort(l1,n/2);
+    l2 = CHARMergeSort(l2,n - n/2);
+    return CHARmerge(l1,l2,n);
+}
+
+float * FLOATmerge(float *l1, float *l2,int n)
+{
+    float *l3 = (float *) malloc(sizeof(float)*n);
+    int k = 0;
+    int i = 0,n1 = n/2;
+    int j = 0,n2 = n - n/2;
+    while(i < n1 && j < n2)
+    {
+        if(*l1 > *l2)
+        {
+            *(l3 + k) = *l2;
+            l2 = l2 + 1;
+            j ++;
+            k ++;
+        }
+        else
+        {
+            *(l3 + k) = *l1;
+            l1 = l1 + 1;
+            i ++;
+            k ++;
+        }
+    }
+
+    while(i < n1)
+    {
+        *(l3 + k) = *l1;
+        l1 = l1 + 1;
+        i ++;
+        k ++;
+    }
+
+    while(j < n2)
+    {
+        *(l3 + k) = *l2;
+        l2 = l2 + 1;
+        j ++;
+        k ++;
+    }
+
+    return l3;
+}
+
+float * FLOATMergeSort(float *l, int n)
+{
+    if(n == 1)
+        return l;
+    float *l1,*l2;
+    l1 = (float *) malloc(sizeof(float) * (n/2));
+    l2 = (float *) malloc(sizeof(float) * (n - n/2));
+    for(int i = 0; i <= n/2; i ++)
+    {
+        *(l1 + i) = *(l + i);
+        *(l2 + i) = *(l + n/2 + i);
+    }
+    l1 = FLOATMergeSort(l1,n/2);
+    l2 = FLOATMergeSort(l2,n - n/2);
+    return FLOATmerge(l1,l2,n);
 }
 
 void INTQuickSort(int v[], int n)
@@ -268,13 +418,16 @@ int main()
     reset(v1,v2,v3,V1,V2,V3,n);
     printf("\nMerge Sort:\n");
 
-    INTMergeSort(v1,n);
-    CHARMergeSort(v2,n);
-    FLOATMergeSort(v3,n);
+    int *p1;
+    char *p2;
+    float *p3;
+    p1 = INTMergeSort(v1,n);
+    p2 = CHARMergeSort(v2,n);
+    p3 = FLOATMergeSort(v3,n);
 
-    INTafisare(v1,n);
-    CHARafisare(v2,n);
-    FLOATafisare(v3,n);
+    INTafisare(p1,n);
+    CHARafisare(p2,n);
+    FLOATafisare(p3,n);
 //Quick Sort
     reset(v1,v2,v3,V1,V2,V3,n);
     printf("\nQuick Sort:\n");
