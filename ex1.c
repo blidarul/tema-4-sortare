@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void reset(int v1[],char v2[],float v3[],int V1[],char V2[],float V3[],int n)
 {
@@ -439,5 +440,14 @@ int main()
     INTafisare(v1,n);
     CHARafisare(v2,n);
     FLOATafisare(v3,n);
+
+
+//Timpi de rulare
+
+    int random[100000],i;
+    for(i = 0; i < 100000; i++)
+        random[i] = rand() % 1000;
+    clock_t bub,ins,sel,mer,qui;
+
     return 0;
 }
