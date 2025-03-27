@@ -138,6 +138,7 @@ void INTQuickSort(int v[], int L, int R)
 
 int main()
 {
+    srand(time(NULL));
     const int N = 100000;
     int random[N],i;
     clock_t timp,t[5];
