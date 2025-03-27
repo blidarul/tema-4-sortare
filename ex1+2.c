@@ -15,9 +15,9 @@ void reset(int v1[],char v2[],float v3[],int V1[],char V2[],float V3[],int n)
 
 void INTswap(int *a, int *b)
 {
-    int aux = *a;
+    int temp = *a;
     *a = *b;
-    *b = aux;
+    *b = temp;
     return;
 }
 
@@ -357,21 +357,87 @@ float * FLOATMergeSort(float *l, int n)
     return FLOATmerge(l1,l2,n);
 }
 
-void INTQuickSort(int v[], int n)
+int INTpartition(int v[],int L, int R)
 {
+    int pivot = v[R];
+    int aux = L - 1;
+    for(int i = L; i < R; i++)
+    {
+        if(v[i] < pivot)
+        {
+            aux ++;
+            INTswap(&v[i],&v[aux]);
+        }
+    }
+    INTswap(&v[R],&v[aux+1]);
+    return aux + 1;
+}
 
+void INTQuickSort(int v[], int L, int R)
+{
+    int P;
+    if(L < R)
+    {
+        P = INTpartition(v,L,R);
+        INTQuickSort(v,L,P - 1);
+        INTQuickSort(v,P + 1,R);
+    }
     return;
 }
 
-void CHARQuickSort(char v[], int n)
+int CHARpartition(char v[],int L, int R)
 {
+    char pivot = v[R];
+    int aux = L - 1;
+    for(int i = L; i < R; i++)
+    {
+        if(v[i] < pivot)
+        {
+            aux ++;
+            CHARswap(&v[i],&v[aux]);
+        }
+    }
+    CHARswap(&v[R],&v[aux+1]);
+    return aux + 1;
+}
 
+void CHARQuickSort(char v[], int L, int R)
+{
+    int P;
+    if(L < R)
+    {
+        P = CHARpartition(v,L,R);
+        CHARQuickSort(v,L,P - 1);
+        CHARQuickSort(v,P + 1,R);
+    }
     return;
 }
 
-void FLOATQuickSort(float v[], int n)
+int FLOATpartition(float v[],int L, int R)
 {
+    float pivot = v[R];
+    int aux = L - 1;
+    for(int i = L; i < R; i++)
+    {
+        if(v[i] < pivot)
+        {
+            aux ++;
+            FLOATswap(&v[i],&v[aux]);
+        }
+    }
+    FLOATswap(&v[R],&v[aux+1]);
+    return aux + 1;
+}
 
+void FLOATQuickSort(float v[], int L, int R)
+{
+    int P;
+    if(L < R)
+    {
+        P = FLOATpartition(v,L,R);
+        FLOATQuickSort(v,L,P - 1);
+        FLOATQuickSort(v,P + 1,R);
+    }
     return;
 }
 
@@ -433,9 +499,9 @@ int main()
     reset(v1,v2,v3,V1,V2,V3,n);
     printf("\nQuick Sort:\n");
 
-    INTQuickSort(v1,n);
-    CHARQuickSort(v2,n);
-    FLOATQuickSort(v3,n);
+    INTQuickSort(v1,0,n-1);
+    CHARQuickSort(v2,0,n-1);
+    FLOATQuickSort(v3,0,n-1);
 
     INTafisare(v1,n);
     CHARafisare(v2,n);
@@ -444,10 +510,72 @@ int main()
 
 //Timpi de rulare
 
-    int random[100000],i;
-    for(i = 0; i < 100000; i++)
-        random[i] = rand() % 1000;
-    clock_t bub,ins,sel,mer,qui;
+    const int N = 100000;
+    int random[N],i;
+    clock_t timp;
+
+    for(i = 0; i < N; i++)
+        random[i] = rand() % N;
+    
+    printf("\nTIMPI RULARE ");
+    //Bubble sort
+    printf("\nBubble:");
+
+    timp = clock();
+    INTBubbleSort(random,N);
+    timp = clock() - timp;
+
+    printf("\nClock ticks: %d (%f seconds).", timp, ((float)timp) / CLOCKS_PER_SEC);
+    
+    for(i = 0; i < N; i++)
+        random[i] = rand() % N;
+
+    //Insertion sort
+    printf("\nInsertion:");
+
+    timp = clock();
+    INTInsertionSort(random,N);
+    timp = clock() - timp;
+
+    printf("\nClock ticks: %d (%f seconds).", timp, ((float)timp) / CLOCKS_PER_SEC);
+
+    for(i = 0; i < N; i++)
+        random[i] = rand() % N;
+    
+    //Selection sort
+    printf("\nSelection:");
+
+    timp = clock();
+    INTSelectionSort(random,N);
+    timp = clock() - timp;
+
+    printf("\nClock ticks: %d (%f seconds).", timp, ((float)timp) / CLOCKS_PER_SEC);
+
+
+    for(i = 0; i < N; i++)
+        random[i] = rand() % N;
+
+    //Merge sort
+    printf("\nMerge:");
+
+    timp = clock();
+    int *p = INTMergeSort(random,N);
+    timp = clock() - timp;
+
+    printf("\nClock ticks: %d (%f seconds).", timp, ((float)timp) / CLOCKS_PER_SEC);
+
+    //Quick sort
+    printf("\nQuick:");
+
+    for(i = 0; i < N; i++)
+        random[i] = rand() % N;
+
+    timp = clock();
+    INTQuickSort(random,0,N - 1);
+    timp = clock() - timp;
+
+    printf("\nClock ticks: %d (%f seconds).", timp, ((float)timp) / CLOCKS_PER_SEC);
+
 
     return 0;
 }
