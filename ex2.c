@@ -49,24 +49,22 @@ void INTSelectionSort(int v[], int n)
     return;
 }
 
-int * INTmerge(int *l1, int *l2,int n)
+void INTmerge(int *l1, int *l2,int n,int *l3)
 {
-    int *l3 = (int *) malloc(sizeof(int)*n),k = 0;
+    int k = 0;
     int i = 0,n1 = n/2;
     int j = 0,n2 = n - n/2;
     while(i < n1 && j < n2)
     {
-        if(*l1 > *l2)
+        if(l1[i] > l2[j])
         {
-            *(l3 + k) = *l2;
-            l2 = l2 + 1;
+            l3[k] = l2[j];
             j ++;
             k ++;
         }
         else
         {
-            *(l3 + k) = *l1;
-            l1 = l1 + 1;
+            l3[k] = l1[i];
             i ++;
             k ++;
         }
@@ -74,38 +72,35 @@ int * INTmerge(int *l1, int *l2,int n)
 
     while(i < n1)
     {
-        *(l3 + k) = *l1;
-        l1 = l1 + 1;
+        l3[k] = l1[i];
         i ++;
         k ++;
     }
 
     while(j < n2)
     {
-        *(l3 + k) = *l2;
-        l2 = l2 + 1;
+        l3[k] = l2[j];
         j ++;
         k ++;
     }
-
-    return l3;
+    return;
 }
 
-int * INTMergeSort(int *l, int n)
+void INTMergeSort(int *l, int n)
 {
     if(n == 1)
-        return l;
-    int *l1,*l2;
-    l1 = (int *) malloc(sizeof(int) * (n/2));
-    l2 = (int *) malloc(sizeof(int) * (n - n/2));
+        return;
+    int l1[n/2],l2[n - n/2];
+    
     for(int i = 0; i <= n/2; i ++)
     {
-        *(l1 + i) = *(l + i);
-        *(l2 + i) = *(l + n/2 + i);
+        l1[i] = l[i];
+        l2[i] = l[n/2 + i];
     }
-    l1 = INTMergeSort(l1,n/2);
-    l2 = INTMergeSort(l2,n - n/2);
-    return INTmerge(l1,l2,n);
+    INTMergeSort(l1,n/2);
+    INTMergeSort(l2,n - n/2);
+    INTmerge(l1,l2,n,l);
+    return;
 }
 
 int INTpartition(int v[],int L, int R)
@@ -190,7 +185,7 @@ int main()
     printf("\n4.Merge:");
 
     timp = clock();
-    int *p = INTMergeSort(random,N);
+    INTMergeSort(random,N);
     timp = clock() - timp;
     t[3] = timp;
 
