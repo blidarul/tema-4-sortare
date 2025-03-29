@@ -12,10 +12,17 @@ void INTswap(int *a, int *b)
 
 void INTBubbleSort(int v[], int n)
 {
-    for(int i = 0; i < n; i++)
-    for(int j = 0; j < n - 1; j++)
-        if(v[j] > v[j + 1])
-            INTswap(&v[j],&v[j+1]);
+    int ok = 1;
+    for(int i = 0; i < n && ok == 1; i++)
+    {
+        ok = 0;
+        for(int j = 0; j < n - 1; j++)
+            if(v[j] > v[j + 1])
+            {
+                INTswap(&v[j],&v[j+1]);
+                ok = 1;
+            }
+    }   
     return;
 }
 
